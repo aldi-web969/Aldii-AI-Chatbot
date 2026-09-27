@@ -16,5 +16,8 @@
     "express": "^5.2.1",
     "groq-sdk": "^1.6.0",
     "openai": "^7.23.0"
+  },
+  "devDependencies": {
+    "wrangler": "^4.142.0"
   }
 }

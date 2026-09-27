@@ -15,3 +15,115 @@ html,body{width:100%;height:100%}body{margin:0;overflow:hidden;font-family:-appl
 .tool-textarea,.tool-input,.code-editor{width:100%;padding:13px;border:1px solid var(--border);border-radius:11px;outline:0;background:var(--surface);color:var(--text);line-height:1.5}.tool-textarea{min-height:150px;resize:vertical}.tool-input{margin-bottom:12px}.code-editor{min-height:280px;resize:vertical;font-family:Consolas,Monaco,monospace;font-size:13px}.code-editor.large{min-height:380px}.tool-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.primary-button,.secondary-button{padding:9px 14px;border-radius:9px;font-size:13px}.primary-button{border:0;background:var(--dark);color:var(--dark-text)}.secondary-button{border:1px solid var(--border);background:var(--surface);color:var(--text)}
 .result-card{margin-top:18px;padding:16px;border:1px solid var(--border);border-radius:12px;background:var(--surface);line-height:1.65;white-space:pre-wrap;word-break:break-word}.upload-box{min-height:180px;border:1px dashed var(--border);border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;color:var(--muted);text-align:center;padding:20px}.upload-box strong{color:var(--text)}.upload-icon{font-size:32px}.vision-preview{display:none;max-width:100%;max-height:400px;margin:18px auto;border-radius:12px;border:1px solid var(--border)}.note{font-size:12px;color:var(--muted)}.coding-grid{display:grid;grid-template-columns:1fr;gap:14px}.coding-grid label{display:block;margin-bottom:6px;font-size:12px;font-weight:700}.coding-preview{width:100%;height:560px;margin-top:20px;border:1px solid var(--border);border-radius:12px;background:#fff}.history-list{display:flex;flex-direction:column;gap:8px}.history-item{padding:12px;border:1px solid var(--border);border-radius:9px;background:var(--surface)}.settings-card{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:18px;border:1px solid var(--border);border-radius:12px;background:var(--surface)}.settings-card p{margin:5px 0 0;color:var(--muted);font-size:12px}
 @media(max-width:700px){.sidebar{position:fixed;z-index:100;left:-270px;top:0;transition:left .2s}.sidebar.open{left:0}.mobile-menu{display:block}.welcome{margin-top:10vh}.welcome h1{font-size:22px}.composer-area{width:calc(100% - 20px)}.tool-container{width:calc(100% - 25px);margin-top:25px}.coding-preview{height:430px}}
+/* =================================
+   ALDII CHAT MESSAGE
+================================= */
+
+.message{
+    width:min(850px,100%);
+    margin:0 auto 24px;
+    display:flex;
+}
+
+.message.user{
+    justify-content:flex-end;
+}
+
+.message.ai{
+    justify-content:flex-start;
+}
+
+.message-bubble{
+    position:relative;
+    max-width:85%;
+    padding:11px 15px;
+    border-radius:16px;
+    line-height:1.65;
+    white-space:pre-wrap;
+    word-break:break-word;
+}
+
+.message.user .message-bubble{
+    background:var(--hover);
+    color:var(--text);
+}
+
+.message.ai .message-bubble{
+    padding-left:0;
+    background:transparent;
+}
+
+
+/* =================================
+   COPY BUTTON
+================================= */
+
+.message-actions{
+    display:flex;
+    align-items:center;
+    margin-top:8px;
+    opacity:.65;
+}
+
+.message-actions button{
+    width:30px;
+    height:30px;
+    padding:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border:0;
+    border-radius:7px;
+
+    background:transparent;
+    color:var(--muted);
+
+    cursor:pointer;
+
+    transition:
+        background .15s ease,
+        color .15s ease,
+        opacity .15s ease;
+}
+
+.message-actions button:hover{
+    background:var(--hover);
+    color:var(--text);
+    opacity:1;
+}
+
+.message-actions button svg{
+    width:17px;
+    height:17px;
+    display:block;
+}
+
+
+/* =================================
+   CODE BLOCK
+================================= */
+
+.code-block{
+    display:block;
+    margin:12px 0;
+    padding:14px;
+
+    overflow-x:auto;
+
+    border-radius:10px;
+
+    background:#111;
+    color:#eee;
+
+    font-family:
+        Consolas,
+        Monaco,
+        "Courier New",
+        monospace;
+
+    font-size:13px;
+    line-height:1.6;
+
+    white-space:pre;
+}

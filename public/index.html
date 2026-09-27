@@ -1,237 +1,1413 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
     <title>Aldii AI V6</title>
-    <link rel="stylesheet" href="style.css">
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
 </head>
+
 <body>
+
 <div class="app">
 
-    <aside class="sidebar" id="sidebar">
+    <!-- =========================
+         SIDEBAR
+    ========================== -->
+
+    <aside
+        class="sidebar"
+        id="sidebar"
+    >
+
         <div class="brand">
-            <div class="brand-logo">A</div>
+
+            <div class="brand-logo">
+                A
+            </div>
+
             <div>
                 <strong>Aldii</strong>
                 <span>AI V6</span>
             </div>
+
         </div>
 
-        <button class="new-chat" id="newChat">＋ <span>Chat Baru</span></button>
+
+        <button
+            class="new-chat"
+            id="newChat"
+            type="button"
+        >
+            ＋
+            <span>Chat Baru</span>
+        </button>
+
 
         <nav class="menu">
-            <div class="menu-title">UTAMA</div>
-            <button class="menu-item active" data-page="chat"><span>◉</span><span>Chat AI</span></button>
-            <button class="menu-item" data-page="vision"><span>▣</span><span>Foto & Vision</span></button>
-            <button class="menu-item" data-page="files"><span>⌕</span><span>File Assistant</span></button>
-            <button class="menu-item" data-page="search"><span>⌕</span><span>Web Search</span></button>
 
-            <div class="menu-title">TOOLS</div>
-            <button class="menu-item" data-page="coding"><span>&lt;/&gt;</span><span>Coding Workspace</span></button>
-            <button class="menu-item" data-page="cpp"><span>C++</span><span>C++ Assistant</span></button>
-            <button class="menu-item" data-page="image"><span>▧</span><span>AI Image</span></button>
-            <button class="menu-item" data-page="study"><span>▤</span><span>Study Mode</span></button>
-            <button class="menu-item" data-page="writing"><span>✎</span><span>Writing Assistant</span></button>
-            <button class="menu-item" data-page="translator"><span>A</span><span>Translator</span></button>
-            <button class="menu-item" data-page="quiz"><span>?</span><span>Quiz Generator</span></button>
+            <div class="menu-title">
+                UTAMA
+            </div>
 
-            <div class="menu-title">LAINNYA</div>
-            <button class="menu-item" data-page="voice"><span>◉</span><span>Voice Chat</span></button>
-            <button class="menu-item" data-page="history"><span>◷</span><span>Riwayat</span></button>
-            <button class="menu-item" data-page="favorites"><span>★</span><span>Favorit</span></button>
-            <button class="menu-item" data-page="settings"><span>⚙</span><span>Pengaturan</span></button>
+
+            <button
+                class="menu-item active"
+                data-page="chat"
+                type="button"
+            >
+                <span>◉</span>
+                <span>Chat AI</span>
+            </button>
+
+
+            <button
+                class="menu-item"
+                data-page="vision"
+                type="button"
+            >
+                <span>▣</span>
+                <span>Foto Tugas</span>
+            </button>
+
+
+            <button
+                class="menu-item"
+                data-page="files"
+                type="button"
+            >
+                <span>□</span>
+                <span>Upload Tugas</span>
+            </button>
+
+
+            <button
+                class="menu-item"
+                data-page="search"
+                type="button"
+            >
+                <span>⌕</span>
+                <span>Web Search</span>
+            </button>
+
+
+            <div class="menu-title">
+                TOOLS
+            </div>
+
+
+            <button
+                class="menu-item"
+                data-page="coding"
+                type="button"
+            >
+                <span>&lt;/&gt;</span>
+                <span>Coding Workspace</span>
+            </button>
+
+
+            <button
+                class="menu-item"
+                data-page="cpp"
+                type="button"
+            >
+                <span>C++</span>
+                <span>C++ Assistant</span>
+            </button>
+
+
+            <button
+                class="menu-item"
+                data-page="image"
+                type="button"
+            >
+                <span>▧</span>
+                <span>AI Image</span>
+            </button>
+
+
+            <button
+                class="menu-item"
+                data-page="study"
+                type="button"
+            >
+                <span>▤</span>
+                <span>Study Mode</span>
+            </button>
+
+
+            <button
+                class="menu-item"
+                data-page="writing"
+                type="button"
+            >
+                <span>✎</span>
+                <span>Writing Assistant</span>
+            </button>
+
+
+            <button
+                class="menu-item"
+                data-page="translator"
+                type="button"
+            >
+                <span>A</span>
+                <span>Translator</span>
+            </button>
+
+
+            <button
+                class="menu-item"
+                data-page="quiz"
+                type="button"
+            >
+                <span>?</span>
+                <span>Quiz Generator</span>
+            </button>
+
+
+            <div class="menu-title">
+                LAINNYA
+            </div>
+
+
+            <button
+                class="menu-item"
+                data-page="voice"
+                type="button"
+            >
+                <span>◉</span>
+                <span>Voice Chat</span>
+            </button>
+
+
+            <button
+                class="menu-item"
+                data-page="history"
+                type="button"
+            >
+                <span>◷</span>
+                <span>Riwayat</span>
+            </button>
+
+
+            <button
+                class="menu-item"
+                data-page="favorites"
+                type="button"
+            >
+                <span>★</span>
+                <span>Favorit</span>
+            </button>
+
+
+            <button
+                class="menu-item"
+                data-page="settings"
+                type="button"
+            >
+                <span>⚙</span>
+                <span>Pengaturan</span>
+            </button>
+
         </nav>
 
+
         <div class="sidebar-bottom">
-            <div class="status"><span class="status-dot"></span><span>System Online</span></div>
+
+            <div class="status">
+
+                <span class="status-dot"></span>
+
+                <span>
+                    System Online
+                </span>
+
+            </div>
+
         </div>
+
     </aside>
 
+
+    <!-- =========================
+         MAIN
+    ========================== -->
+
     <main class="main">
+
+
         <header class="topbar">
-            <button class="mobile-menu" id="mobileMenu">☰</button>
+
+            <button
+                class="mobile-menu"
+                id="mobileMenu"
+                type="button"
+            >
+                ☰
+            </button>
+
+
             <div class="page-title">
-                <strong id="pageTitle">Chat AI</strong>
-                <span>Aldii V6</span>
+
+                <strong id="pageTitle">
+                    Chat AI
+                </strong>
+
+                <span>
+                    Aldii V6
+                </span>
+
             </div>
-            <button class="theme-button" id="themeButton">◐</button>
+
+
+            <button
+                class="theme-button"
+                id="themeButton"
+                type="button"
+                title="Ganti tema"
+            >
+                ◐
+            </button>
+
         </header>
 
-        <section class="page active" id="page-chat">
-            <div class="chat-area" id="chatMessages">
-                <div class="welcome" id="welcome">
-                    <div class="welcome-logo">A</div>
-                    <h1>Bagaimana saya bisa membantu?</h1>
-                    <p>Tanya, kirim foto, atau gunakan salah satu tools Aldii.</p>
-                </div>
-            </div>
-            <div class="composer-area">
-                <div class="suggestions">
-                    <button data-prompt="Jelaskan materi ini dengan sederhana.">Jelaskan materi</button>
-                    <button data-prompt="Buatkan kode HTML, CSS, dan JavaScript sederhana.">Buat kode</button>
-                    <button data-prompt="Buatkan latihan soal dan pembahasannya.">Buat latihan</button>
-                </div>
-                <div class="composer">
-                    <textarea id="messageInput" rows="1" placeholder="Kirim pesan ke Aldii..."></textarea>
-                    <div class="composer-bottom">
-                        <span class="composer-hint">Enter untuk mengirim</span>
-                        <button class="send-button" id="sendButton" disabled>↑</button>
+
+        <!-- =========================
+             CHAT
+        ========================== -->
+
+        <section
+            class="page active"
+            id="page-chat"
+        >
+
+            <div
+                class="chat-area"
+                id="chatMessages"
+            >
+
+                <div
+                    class="welcome"
+                    id="welcome"
+                >
+
+                    <div class="welcome-logo">
+                        A
                     </div>
+
+                    <h1>
+                        Halo, saya Aldii
+                    </h1>
+
+                    <p>
+                        Asisten AI yang siap membantu kamu.
+                    </p>
+
                 </div>
-                <div class="composer-note">Aldii dapat membuat kesalahan. Periksa informasi penting.</div>
+
             </div>
+
+
+            <div class="composer-area">
+
+                <div class="suggestions">
+
+                    <button
+                        type="button"
+                        data-suggestion="Jelaskan materi ini dengan mudah."
+                    >
+                        Jelaskan materi
+                    </button>
+
+                    <button
+                        type="button"
+                        data-suggestion="Buatkan saya kode HTML, CSS, dan JavaScript."
+                    >
+                        Buat kode
+                    </button>
+
+                    <button
+                        type="button"
+                        data-suggestion="Bantu saya mengerjakan tugas."
+                    >
+                        Bantu tugas
+                    </button>
+
+                </div>
+
+
+                <div class="composer">
+
+                    <textarea
+                        id="messageInput"
+                        rows="1"
+                        placeholder="Kirim pesan ke Aldii..."
+                    ></textarea>
+
+
+                    <div class="composer-bottom">
+
+                        <span class="composer-hint">
+                            Enter untuk mengirim
+                        </span>
+
+
+                        <button
+                            class="send-button"
+                            id="sendButton"
+                            type="button"
+                            disabled
+                            title="Kirim"
+                        >
+                            ↑
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <div class="composer-note">
+                    Aldii dapat membantu belajar,
+                    coding, tugas, dan berbagai kebutuhan lainnya.
+                </div>
+
+            </div>
+
         </section>
 
-        <section class="page" id="page-vision">
+
+        <!-- =========================
+             FOTO TUGAS
+        ========================== -->
+
+        <section
+            class="page"
+            id="page-vision"
+        >
+
             <div class="tool-container">
-                <div class="tool-heading"><div class="tool-icon">▣</div><div><h1>Foto & Vision</h1><p>Kirim foto tugas atau gambar untuk dianalisis Aldii.</p></div></div>
-                <input id="visionFile" type="file" accept="image/*" hidden>
-                <div class="upload-box" id="visionDrop">
-                    <div class="upload-icon">＋</div>
-                    <strong>Pilih atau tarik foto ke sini</strong>
-                    <span>JPG, PNG, WEBP</span>
-                    <button class="primary-button" id="visionChoose">Pilih Foto</button>
+
+                <div class="tool-heading">
+
+                    <div class="tool-icon">
+                        T
+                    </div>
+
+                    <div>
+
+                        <h1>
+                            Foto Tugas
+                        </h1>
+
+                        <p>
+                            Foto soal dan biarkan Aldii
+                            membaca serta mengerjakannya.
+                        </p>
+
+                    </div>
+
                 </div>
-                <img id="visionPreview" class="vision-preview" alt="Preview">
-                <textarea id="visionPrompt" class="tool-textarea" placeholder="Contoh: Jelaskan soal pada foto ini dan berikan langkah penyelesaiannya."></textarea>
-                <button class="primary-button" id="visionAsk">Analisis Foto</button>
-                <div class="result-card" id="visionResult">Hasil analisis akan muncul di sini.</div>
+
+
+                <input
+                    id="visionFile"
+                    type="file"
+                    accept="image/*"
+                    capture="environment"
+                    hidden
+                >
+
+
+                <div
+                    class="upload-box"
+                    id="visionDrop"
+                >
+
+                    <div class="upload-icon">
+                        +
+                    </div>
+
+                    <strong>
+                        Foto atau upload soal tugas
+                    </strong>
+
+                    <span>
+                        JPG, PNG, WEBP
+                    </span>
+
+
+                    <button
+                        class="primary-button"
+                        id="visionChoose"
+                        type="button"
+                    >
+                        Pilih Foto Tugas
+                    </button>
+
+                </div>
+
+
+                <img
+                    id="visionPreview"
+                    class="vision-preview"
+                    alt="Preview tugas"
+                >
+
+
+                <textarea
+                    id="visionPrompt"
+                    class="tool-textarea"
+                    placeholder="Contoh: Kerjakan soal ini dan jelaskan langkah-langkahnya."
+                ></textarea>
+
+
+                <button
+                    class="primary-button"
+                    id="visionAsk"
+                    type="button"
+                >
+                    Kerjakan Tugas
+                </button>
+
+
+                <div
+                    class="result-card"
+                    id="visionResult"
+                >
+                    Jawaban Aldii akan muncul di sini.
+                </div>
+
             </div>
+
         </section>
 
-        <section class="page" id="page-files">
+
+        <!-- =========================
+             UPLOAD TUGAS
+        ========================== -->
+
+        <section
+            class="page"
+            id="page-files"
+        >
+
             <div class="tool-container">
-                <div class="tool-heading"><div class="tool-icon">⌕</div><div><h1>File Assistant</h1><p>Pilih file untuk disiapkan sebagai bahan percakapan.</p></div></div>
-                <input id="fileInput" type="file" accept=".txt,.pdf,.doc,.docx,.md,.csv" hidden>
+
+                <div class="tool-heading">
+
+                    <div class="tool-icon">
+                        F
+                    </div>
+
+                    <div>
+
+                        <h1>
+                            Upload Tugas
+                        </h1>
+
+                        <p>
+                            Upload file tugas dan minta
+                            Aldii mengerjakannya.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <input
+                    id="fileInput"
+                    type="file"
+                    accept=".txt,.md,.csv"
+                    hidden
+                >
+
+
                 <div class="upload-box">
-                    <strong>Upload dokumen</strong><span>TXT, PDF, DOC, DOCX, MD, CSV</span>
-                    <button class="primary-button" id="fileChoose">Pilih File</button>
+
+                    <div class="upload-icon">
+                        +
+                    </div>
+
+                    <strong>
+                        Upload file tugas
+                    </strong>
+
+                    <span>
+                        TXT, MD, CSV
+                    </span>
+
+
+                    <button
+                        class="primary-button"
+                        id="fileChoose"
+                        type="button"
+                    >
+                        Pilih File Tugas
+                    </button>
+
                 </div>
-                <div class="result-card" id="fileResult">Belum ada file yang dipilih.</div>
-                <p class="note">Catatan: pembacaan PDF/DOCX membutuhkan dukungan backend khusus. UI ini menyiapkan filenya.</p>
+
+
+                <textarea
+                    id="filePrompt"
+                    class="tool-textarea"
+                    placeholder="Contoh: Kerjakan semua soal dan jelaskan jawabannya."
+                ></textarea>
+
+
+                <button
+                    class="primary-button"
+                    id="fileAsk"
+                    type="button"
+                >
+                    Kerjakan File
+                </button>
+
+
+                <div
+                    class="result-card"
+                    id="fileResult"
+                >
+                    Belum ada file tugas.
+                </div>
+
             </div>
+
         </section>
 
-        <section class="page" id="page-search">
+
+        <!-- =========================
+             WEB SEARCH
+        ========================== -->
+
+        <section
+            class="page"
+            id="page-search"
+        >
+
             <div class="tool-container">
-                <div class="tool-heading"><div class="tool-icon">⌕</div><div><h1>Web Search</h1><p>Siapkan pencarian dan kirim permintaannya ke Aldii.</p></div></div>
-                <input id="searchInput" class="tool-input" placeholder="Apa yang ingin kamu cari?">
-                <button class="primary-button" id="searchAsk">Cari dengan Aldii</button>
-                <div class="result-card" id="searchResult">Hasil akan muncul di sini. Backend web search belum ditambahkan.</div>
+
+                <div class="tool-heading">
+
+                    <div class="tool-icon">
+                        S
+                    </div>
+
+                    <div>
+
+                        <h1>
+                            Web Search
+                        </h1>
+
+                        <p>
+                            Cari informasi dengan Aldii.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <input
+                    id="searchInput"
+                    class="tool-input"
+                    placeholder="Apa yang ingin kamu cari?"
+                >
+
+
+                <button
+                    class="primary-button"
+                    id="searchAsk"
+                    type="button"
+                >
+                    Cari dengan Aldii
+                </button>
+
+
+                <div
+                    class="result-card"
+                    id="searchResult"
+                >
+                    Hasil akan muncul di sini.
+                </div>
+
             </div>
+
         </section>
 
-        <section class="page" id="page-coding">
+
+        <!-- =========================
+             CODING
+        ========================== -->
+
+        <section
+            class="page"
+            id="page-coding"
+        >
+
             <div class="tool-container">
-                <div class="tool-heading"><div class="tool-icon">&lt;/&gt;</div><div><h1>Coding Workspace</h1><p>HTML, CSS, JavaScript dalam satu workspace.</p></div></div>
+
+                <div class="tool-heading">
+
+                    <div class="tool-icon">
+                        &lt;/&gt;
+                    </div>
+
+                    <div>
+
+                        <h1>
+                            Coding Workspace
+                        </h1>
+
+                        <p>
+                            Tulis dan jalankan HTML, CSS,
+                            serta JavaScript.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
                 <div class="coding-grid">
-                    <div><label>HTML</label><textarea id="codingHtml" class="code-editor" placeholder="&lt;h1&gt;Halo Aldii&lt;/h1&gt;"></textarea></div>
-                    <div><label>CSS</label><textarea id="codingCss" class="code-editor" placeholder="body { font-family: Arial; }"></textarea></div>
-                    <div><label>JavaScript</label><textarea id="codingJs" class="code-editor" placeholder="console.log('Halo');"></textarea></div>
+
+                    <div>
+
+                        <label>
+                            HTML
+                        </label>
+
+                        <textarea
+                            id="codingHtml"
+                            class="code-editor"
+                            placeholder="<h1>Halo Aldii</h1>"
+                        ></textarea>
+
+                    </div>
+
+
+                    <div>
+
+                        <label>
+                            CSS
+                        </label>
+
+                        <textarea
+                            id="codingCss"
+                            class="code-editor"
+                            placeholder="body { font-family: Arial; }"
+                        ></textarea>
+
+                    </div>
+
+
+                    <div>
+
+                        <label>
+                            JavaScript
+                        </label>
+
+                        <textarea
+                            id="codingJs"
+                            class="code-editor"
+                            placeholder="console.log('Halo');"
+                        ></textarea>
+
+                    </div>
+
                 </div>
+
+
                 <div class="tool-actions">
-                    <button class="primary-button" id="codingRun">Run Preview</button>
-                    <button class="secondary-button" id="codingClear">Clear</button>
-                    <button class="secondary-button" id="codingCopyHtml">Copy HTML</button>
-                    <button class="secondary-button" id="codingCopyCss">Copy CSS</button>
-                    <button class="secondary-button" id="codingCopyJs">Copy JS</button>
+
+                    <button
+                        class="primary-button"
+                        id="codingRun"
+                        type="button"
+                    >
+                        Run Preview
+                    </button>
+
+
+                    <button
+                        class="secondary-button"
+                        id="codingClear"
+                        type="button"
+                    >
+                        Clear
+                    </button>
+
+
+                    <button
+                        class="secondary-button"
+                        id="codingCopyHtml"
+                        type="button"
+                    >
+                        Copy HTML
+                    </button>
+
+
+                    <button
+                        class="secondary-button"
+                        id="codingCopyCss"
+                        type="button"
+                    >
+                        Copy CSS
+                    </button>
+
+
+                    <button
+                        class="secondary-button"
+                        id="codingCopyJs"
+                        type="button"
+                    >
+                        Copy JS
+                    </button>
+
                 </div>
-                <iframe id="codingPreview" class="coding-preview" title="Coding Preview"></iframe>
+
+
+                <iframe
+                    id="codingPreview"
+                    class="coding-preview"
+                    title="Coding Preview"
+                ></iframe>
+
             </div>
+
         </section>
 
-        <section class="page" id="page-cpp">
+
+        <!-- =========================
+             CPP
+        ========================== -->
+
+        <section
+            class="page"
+            id="page-cpp"
+        >
+
             <div class="tool-container">
-                <div class="tool-heading"><div class="tool-icon">&lt;/&gt;</div><div><h1>C++ Assistant</h1><p>Jelaskan atau perbaiki kode C++.</p></div></div>
-                <textarea id="cppInput" class="code-editor large" placeholder="#include &lt;iostream&gt;
 
-int main() {
-    std::cout &lt;&lt; &quot;Halo Aldii!&quot;;
-    return 0;
-}"></textarea>
-                <div class="tool-actions"><button class="primary-button" id="cppExplain">Jelaskan</button><button class="secondary-button" id="cppFix">Perbaiki</button><button class="secondary-button" id="cppCopy">Copy</button></div>
-                <div class="result-card" id="cppResult">Hasil Aldii akan muncul di sini.</div>
+                <div class="tool-heading">
+
+                    <div class="tool-icon">
+                        C++
+                    </div>
+
+                    <div>
+
+                        <h1>
+                            C++ Assistant
+                        </h1>
+
+                        <p>
+                            Jelaskan dan perbaiki kode C++.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <textarea
+                    id="cppInput"
+                    class="code-editor large"
+                    placeholder="#include <iostream>"
+                ></textarea>
+
+
+                <div class="tool-actions">
+
+                    <button
+                        class="primary-button"
+                        id="cppExplain"
+                        type="button"
+                    >
+                        Jelaskan
+                    </button>
+
+
+                    <button
+                        class="secondary-button"
+                        id="cppFix"
+                        type="button"
+                    >
+                        Perbaiki
+                    </button>
+
+
+                    <button
+                        class="secondary-button"
+                        id="cppCopy"
+                        type="button"
+                    >
+                        Copy
+                    </button>
+
+                </div>
+
+
+                <div
+                    class="result-card"
+                    id="cppResult"
+                >
+                    Hasil Aldii akan muncul di sini.
+                </div>
+
             </div>
+
         </section>
 
-        <section class="page" id="page-image">
+
+        <!-- =========================
+             AI IMAGE
+        ========================== -->
+
+        <section
+            class="page"
+            id="page-image"
+        >
+
             <div class="tool-container">
-                <div class="tool-heading"><div class="tool-icon">▧</div><div><h1>AI Image</h1><p>Siapkan prompt untuk generator gambar.</p></div></div>
-                <textarea id="imagePrompt" class="tool-textarea" placeholder="Contoh: kota futuristik pada malam hari..."></textarea>
-                <button class="primary-button" id="generateImage">Generate Image</button>
-                <div class="result-card">Fitur generator gambar membutuhkan provider image API.</div>
+
+                <div class="tool-heading">
+
+                    <div class="tool-icon">
+                        I
+                    </div>
+
+                    <div>
+
+                        <h1>
+                            AI Image
+                        </h1>
+
+                        <p>
+                            Buat gambar berdasarkan deskripsi.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <textarea
+                    id="imagePrompt"
+                    class="tool-textarea"
+                    placeholder="Contoh: kota futuristik pada malam hari..."
+                ></textarea>
+
+
+                <button
+                    class="primary-button"
+                    id="generateImage"
+                    type="button"
+                >
+                    Generate Image
+                </button>
+
+
+                <div
+                    class="result-card"
+                    id="imageResult"
+                >
+                    Hasil gambar akan muncul di sini.
+                </div>
+
             </div>
+
         </section>
 
-        <section class="page" id="page-study">
+
+        <!-- =========================
+             STUDY
+        ========================== -->
+
+        <section
+            class="page"
+            id="page-study"
+        >
+
             <div class="tool-container">
-                <div class="tool-heading"><div class="tool-icon">▤</div><div><h1>Study Mode</h1><p>Belajar dengan penjelasan, contoh, dan latihan.</p></div></div>
-                <textarea id="studyInput" class="tool-textarea" placeholder="Masukkan materi atau topik belajar..."></textarea>
-                <div class="tool-actions"><button class="primary-button" id="studyExplain">Jelaskan Materi</button><button class="secondary-button" id="studyQuiz">Buat Latihan</button></div>
-                <div class="result-card" id="studyResult">Hasil belajar akan muncul di sini.</div>
+
+                <div class="tool-heading">
+
+                    <div class="tool-icon">
+                        S
+                    </div>
+
+                    <div>
+
+                        <h1>
+                            Study Mode
+                        </h1>
+
+                        <p>
+                            Belajar bersama Aldii.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <textarea
+                    id="studyInput"
+                    class="tool-textarea"
+                    placeholder="Masukkan materi atau topik belajar..."
+                ></textarea>
+
+
+                <div class="tool-actions">
+
+                    <button
+                        class="primary-button"
+                        id="studyExplain"
+                        type="button"
+                    >
+                        Jelaskan Materi
+                    </button>
+
+
+                    <button
+                        class="secondary-button"
+                        id="studyQuiz"
+                        type="button"
+                    >
+                        Buat Latihan
+                    </button>
+
+                </div>
+
+
+                <div
+                    class="result-card"
+                    id="studyResult"
+                >
+                    Hasil belajar akan muncul di sini.
+                </div>
+
             </div>
+
         </section>
 
-        <section class="page" id="page-writing">
+
+        <!-- =========================
+             WRITING
+        ========================== -->
+
+        <section
+            class="page"
+            id="page-writing"
+        >
+
             <div class="tool-container">
-                <div class="tool-heading"><div class="tool-icon">✎</div><div><h1>Writing Assistant</h1><p>Bantu membuat dan memperbaiki tulisan.</p></div></div>
-                <textarea id="writingInput" class="tool-textarea" placeholder="Tulis ide atau teks yang ingin dibuat/diperbaiki..."></textarea>
-                <button class="primary-button" id="writingAsk">Bantu Menulis</button>
-                <div class="result-card" id="writingResult">Hasil akan muncul di sini.</div>
+
+                <div class="tool-heading">
+
+                    <div class="tool-icon">
+                        W
+                    </div>
+
+                    <div>
+
+                        <h1>
+                            Writing Assistant
+                        </h1>
+
+                        <p>
+                            Bantu membuat dan memperbaiki tulisan.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <textarea
+                    id="writingInput"
+                    class="tool-textarea"
+                    placeholder="Tulis ide atau teks yang ingin dibuat/diperbaiki..."
+                ></textarea>
+
+
+                <button
+                    class="primary-button"
+                    id="writingAsk"
+                    type="button"
+                >
+                    Bantu Menulis
+                </button>
+
+
+                <div
+                    class="result-card"
+                    id="writingResult"
+                >
+                    Hasil akan muncul di sini.
+                </div>
+
             </div>
+
         </section>
 
-        <section class="page" id="page-translator">
+
+        <!-- =========================
+             TRANSLATOR
+        ========================== -->
+
+        <section
+            class="page"
+            id="page-translator"
+        >
+
             <div class="tool-container">
-                <div class="tool-heading"><div class="tool-icon">A</div><div><h1>Translator</h1><p>Terjemahkan teks dengan bantuan Aldii.</p></div></div>
-                <textarea id="translateInput" class="tool-textarea" placeholder="Masukkan teks..."></textarea>
-                <input id="translateTarget" class="tool-input" value="English" placeholder="Bahasa tujuan">
-                <button class="primary-button" id="translateAsk">Terjemahkan</button>
-                <div class="result-card" id="translateResult">Hasil terjemahan akan muncul di sini.</div>
+
+                <div class="tool-heading">
+
+                    <div class="tool-icon">
+                        A
+                    </div>
+
+                    <div>
+
+                        <h1>
+                            Translator
+                        </h1>
+
+                        <p>
+                            Terjemahkan teks dengan Aldii.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <textarea
+                    id="translateInput"
+                    class="tool-textarea"
+                    placeholder="Masukkan teks..."
+                ></textarea>
+
+
+                <input
+                    id="translateTarget"
+                    class="tool-input"
+                    value="English"
+                    placeholder="Bahasa tujuan"
+                >
+
+
+                <button
+                    class="primary-button"
+                    id="translateAsk"
+                    type="button"
+                >
+                    Terjemahkan
+                </button>
+
+
+                <div
+                    class="result-card"
+                    id="translateResult"
+                >
+                    Hasil terjemahan akan muncul di sini.
+                </div>
+
             </div>
+
         </section>
 
-        <section class="page" id="page-quiz">
+
+        <!-- =========================
+             QUIZ
+        ========================== -->
+
+        <section
+            class="page"
+            id="page-quiz"
+        >
+
             <div class="tool-container">
-                <div class="tool-heading"><div class="tool-icon">?</div><div><h1>Quiz Generator</h1><p>Buat latihan soal dari topik tertentu.</p></div></div>
-                <textarea id="quizInput" class="tool-textarea" placeholder="Topik: JavaScript dasar, sejarah Indonesia, matematika..."></textarea>
-                <button class="primary-button" id="quizAsk">Buat Quiz</button>
-                <div class="result-card" id="quizResult">Quiz akan muncul di sini.</div>
+
+                <div class="tool-heading">
+
+                    <div class="tool-icon">
+                        ?
+                    </div>
+
+                    <div>
+
+                        <h1>
+                            Quiz Generator
+                        </h1>
+
+                        <p>
+                            Buat latihan dari materi kamu.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <textarea
+                    id="quizInput"
+                    class="tool-textarea"
+                    placeholder="Topik: JavaScript dasar, sejarah Indonesia, matematika..."
+                ></textarea>
+
+
+                <button
+                    class="primary-button"
+                    id="quizAsk"
+                    type="button"
+                >
+                    Buat Quiz
+                </button>
+
+
+                <div
+                    class="result-card"
+                    id="quizResult"
+                >
+                    Quiz akan muncul di sini.
+                </div>
+
             </div>
+
         </section>
 
-        <section class="page" id="page-voice">
+
+        <!-- =========================
+             VOICE
+        ========================== -->
+
+        <section
+            class="page"
+            id="page-voice"
+        >
+
             <div class="tool-container">
-                <div class="tool-heading"><div class="tool-icon">◉</div><div><h1>Voice Chat</h1><p>Gunakan mikrofon untuk mengisi pesan.</p></div></div>
-                <button class="primary-button" id="voiceStart">Mulai Bicara</button>
-                <div class="result-card" id="voiceResult">Status mikrofon akan muncul di sini.</div>
+
+                <div class="tool-heading">
+
+                    <div class="tool-icon">
+                        V
+                    </div>
+
+                    <div>
+
+                        <h1>
+                            Voice Chat
+                        </h1>
+
+                        <p>
+                            Gunakan suara untuk berbicara dengan Aldii.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    class="primary-button"
+                    id="voiceStart"
+                    type="button"
+                >
+                    Mulai Bicara
+                </button>
+
+
+                <div
+                    class="result-card"
+                    id="voiceResult"
+                >
+                    Status mikrofon akan muncul di sini.
+                </div>
+
             </div>
+
         </section>
 
-        <section class="page" id="page-history">
+
+        <!-- =========================
+             HISTORY
+        ========================== -->
+
+        <section
+            class="page"
+            id="page-history"
+        >
+
             <div class="tool-container">
-                <div class="tool-heading"><div class="tool-icon">◷</div><div><h1>Riwayat</h1><p>Percakapan yang tersimpan di browser.</p></div></div>
-                <div id="historyList" class="history-list"></div>
-                <button class="secondary-button" id="clearHistory">Hapus Semua Riwayat</button>
+
+                <div class="tool-heading">
+
+                    <div class="tool-icon">
+                        H
+                    </div>
+
+                    <div>
+
+                        <h1>
+                            Riwayat
+                        </h1>
+
+                        <p>
+                            Percakapan Aldii yang tersimpan.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    id="historyList"
+                    class="history-list"
+                ></div>
+
+
+                <button
+                    class="secondary-button"
+                    id="clearHistory"
+                    type="button"
+                >
+                    Hapus Semua Riwayat
+                </button>
+
             </div>
+
         </section>
 
-        <section class="page" id="page-favorites">
+
+        <!-- =========================
+             FAVORITES
+        ========================== -->
+
+        <section
+            class="page"
+            id="page-favorites"
+        >
+
             <div class="tool-container">
-                <div class="tool-heading"><div class="tool-icon">★</div><div><h1>Favorit</h1><p>Pesan yang kamu simpan sebagai favorit.</p></div></div>
-                <div id="favoritesList" class="history-list"></div>
+
+                <div class="tool-heading">
+
+                    <div class="tool-icon">
+                        ★
+                    </div>
+
+                    <div>
+
+                        <h1>
+                            Favorit
+                        </h1>
+
+                        <p>
+                            Pesan favorit kamu.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    id="favoritesList"
+                    class="history-list"
+                ></div>
+
             </div>
+
         </section>
 
-        <section class="page" id="page-settings">
+
+        <!-- =========================
+             SETTINGS
+        ========================== -->
+
+        <section
+            class="page"
+            id="page-settings"
+        >
+
             <div class="tool-container">
-                <div class="tool-heading"><div class="tool-icon">⚙</div><div><h1>Pengaturan</h1><p>Atur pengalaman menggunakan Aldii.</p></div></div>
-                <div class="settings-card"><div><strong>Tema</strong><p>Gunakan mode terang atau gelap.</p></div><button class="secondary-button" id="settingsTheme">Ganti Tema</button></div>
+
+                <div class="tool-heading">
+
+                    <div class="tool-icon">
+                        ⚙
+                    </div>
+
+                    <div>
+
+                        <h1>
+                            Pengaturan
+                        </h1>
+
+                        <p>
+                            Atur tampilan Aldii.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="settings-card">
+
+                    <div>
+
+                        <strong>
+                            Tema
+                        </strong>
+
+                        <p>
+                            Gunakan mode terang atau gelap.
+                        </p>
+
+                    </div>
+
+
+                    <button
+                        class="secondary-button"
+                        id="settingsTheme"
+                        type="button"
+                    >
+                        Ganti Tema
+                    </button>
+
+                </div>
+
             </div>
+
         </section>
+
     </main>
+
 </div>
+
+
 <script src="script.js"></script>
+
 </body>
+
 </html>

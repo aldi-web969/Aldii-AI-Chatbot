@@ -1,46 +1,56 @@
 "use strict";
 
-/* =========================================
-   ALDII AI
-   FRONTEND + CLOUDFLARE WORKER
-========================================= */
+/* =========================================================
+   ALDII AI - FRONTEND
+   Cloudflare Worker API
+========================================================= */
 
-var API_BASE =
+const ALDII_API =
     "https://aldii-ai.aldiansyahputrakusuma21.workers.dev";
 
-var messageInput = document.getElementById("messageInput");
-var sendButton = document.getElementById("sendButton");
-var chatMessages = document.getElementById("chatMessages");
 
-var sending = false;
-
-
-/* =========================================
+/* =========================================================
    HELPER
-========================================= */
+========================================================= */
 
 function byId(id) {
     return document.getElementById(id);
 }
 
 
+/* =========================================================
+   CHAT
+========================================================= */
+
+const messageInput = byId("messageInput");
+const sendButton = byId("sendButton");
+const chatMessages = byId("chatMessages");
+
+let sending = false;
+
+
 function addMessage(text, type) {
 
-    var box = document.createElement("div");
+    const box =
+        document.createElement("div");
 
     box.className =
         "message " + type;
 
-    var bubble =
+
+    const bubble =
         document.createElement("div");
 
     bubble.className =
         "message-bubble";
 
+
     bubble.textContent =
         String(text);
 
+
     box.appendChild(bubble);
+
 
     if (chatMessages) {
 
@@ -48,11 +58,17 @@ function addMessage(text, type) {
 
         chatMessages.scrollTop =
             chatMessages.scrollHeight;
+
     }
+
 
     return box;
 }
 
+
+/* =========================================================
+   SEND BUTTON
+========================================================= */
 
 function updateButton() {
 
@@ -60,15 +76,17 @@ function updateButton() {
         return;
     }
 
+
     sendButton.disabled =
         sending ||
         messageInput.value.trim().length === 0;
+
 }
 
 
-/* =========================================
-   NORMAL CHAT
-========================================= */
+/* =========================================================
+   SEND MESSAGE
+========================================================= */
 
 function sendMessage() {
 
@@ -76,25 +94,36 @@ function sendMessage() {
         return;
     }
 
-    var text =
+
+    if (!messageInput) {
+        return;
+    }
+
+
+    const text =
         messageInput.value.trim();
+
 
     if (!text) {
         return;
     }
 
+
     sending = true;
 
     updateButton();
+
 
     addMessage(
         text,
         "user"
     );
 
+
     messageInput.value = "";
 
-    var loading =
+
+    const loading =
         addMessage(
             "Aldii sedang berpikir...",
             "ai"
@@ -102,7 +131,7 @@ function sendMessage() {
 
 
     fetch(
-        API_BASE + "/api/chat",
+        ALDII_API + "/api/chat",
         {
             method: "POST",
 
@@ -111,44 +140,54 @@ function sendMessage() {
                     "application/json"
             },
 
-            body: JSON.stringify({
-
-                message:
-                    text
-
-            })
+            body:
+                JSON.stringify({
+                    message: text
+                })
         }
     )
 
-    .then(function (r) {
+    .then(function(response) {
 
-        if (!r.ok) {
+        return response
+            .json()
+            .then(function(data) {
 
-            throw new Error(
-                "Server error " +
-                r.status
-            );
-        }
+                if (!response.ok) {
 
-        return r.json();
+                    throw new Error(
+                        data.error ||
+                        "Server error " +
+                        response.status
+                    );
+
+                }
+
+
+                return data;
+
+            });
 
     })
 
-    .then(function (data) {
+    .then(function(data) {
 
         loading.remove();
 
-        var answer =
+
+        const answer =
             data.response ||
             data.message ||
             data.answer ||
             data.error ||
             "Aldii tidak memberikan jawaban.";
 
+
         addMessage(
             answer,
             "ai"
         );
+
 
         saveHistory(
             text,
@@ -157,32 +196,39 @@ function sendMessage() {
 
     })
 
-    .catch(function (e) {
+    .catch(function(error) {
 
         loading.remove();
 
+
         addMessage(
             "Gagal menghubungkan ke Aldii: " +
-            e.message,
+            error.message,
             "ai"
         );
 
     })
 
-    .finally(function () {
+    .finally(function() {
 
         sending = false;
 
         updateButton();
 
     });
+
 }
 
+
+/* =========================================================
+   CHAT EVENTS
+========================================================= */
 
 if (sendButton) {
 
     sendButton.onclick =
         sendMessage;
+
 }
 
 
@@ -191,82 +237,98 @@ if (messageInput) {
     messageInput.oninput =
         updateButton;
 
+
     messageInput.onkeydown =
-        function (e) {
+        function(event) {
 
             if (
-                e &&
-                e.key === "Enter" &&
-                !e.shiftKey
+                event.key === "Enter" &&
+                !event.shiftKey
             ) {
 
-                e.preventDefault();
+                event.preventDefault();
 
                 sendMessage();
+
             }
+
         };
+
 }
 
 
-/* =========================================
+/* =========================================================
    PAGE TITLES
-========================================= */
+========================================================= */
 
-var pageTitles = {
+const pageTitles = {
 
-    chat: "Chat AI",
+    chat:
+        "Chat AI",
 
-    vision: "Foto & Vision",
+    vision:
+        "Foto & Vision",
 
-    files: "File Assistant",
+    files:
+        "File Assistant",
 
-    search: "Web Search",
+    search:
+        "Web Search",
 
-    coding: "Coding Workspace",
+    coding:
+        "Coding Workspace",
 
-    cpp: "C++ Assistant",
+    cpp:
+        "C++ Assistant",
 
-    image: "AI Image",
+    image:
+        "AI Image",
 
-    study: "Study Mode",
+    study:
+        "Study Mode",
 
-    writing: "Writing Assistant",
+    writing:
+        "Writing Assistant",
 
-    translator: "Translator",
+    translator:
+        "Translator",
 
-    quiz: "Quiz Generator",
+    quiz:
+        "Quiz Generator",
 
-    voice: "Voice Chat",
+    voice:
+        "Voice Chat",
 
-    history: "Riwayat",
+    history:
+        "Riwayat",
 
-    favorites: "Favorit",
+    favorites:
+        "Favorit",
 
-    settings: "Pengaturan"
+    settings:
+        "Pengaturan"
 
 };
 
 
-/* =========================================
+/* =========================================================
    PAGE NAVIGATION
-========================================= */
+========================================================= */
 
 function showPage(name) {
 
     document
         .querySelectorAll(".page")
-        .forEach(
-            function (p) {
+        .forEach(function(page) {
 
-                p.classList.remove(
-                    "active"
-                );
+            page.classList.remove(
+                "active"
+            );
 
-            }
-        );
+        });
 
 
-    var page =
+    const page =
         byId(
             "page-" + name
         );
@@ -277,29 +339,25 @@ function showPage(name) {
         page.classList.add(
             "active"
         );
+
     }
 
 
     document
         .querySelectorAll(".menu-item")
-        .forEach(
-            function (b) {
+        .forEach(function(button) {
 
-                b.classList.toggle(
+            button.classList.toggle(
+                "active",
+                button.getAttribute(
+                    "data-page"
+                ) === name
+            );
 
-                    "active",
-
-                    b.getAttribute(
-                        "data-page"
-                    ) === name
-
-                );
-
-            }
-        );
+        });
 
 
-    var title =
+    const title =
         byId("pageTitle");
 
 
@@ -312,85 +370,90 @@ function showPage(name) {
     }
 
 
-    var side =
+    const sidebar =
         byId("sidebar");
 
 
-    if (side) {
+    if (sidebar) {
 
-        side.classList.remove(
+        sidebar.classList.remove(
             "open"
         );
 
     }
+
 }
 
 
+/* =========================================================
+   MENU
+========================================================= */
+
 document
     .querySelectorAll(".menu-item")
-    .forEach(
-        function (b) {
+    .forEach(function(button) {
 
-            b.onclick =
-                function () {
+        button.onclick =
+            function() {
 
-                    showPage(
-                        b.getAttribute(
-                            "data-page"
-                        )
-                    );
+                showPage(
+                    button.getAttribute(
+                        "data-page"
+                    )
+                );
 
-                };
+            };
 
-        }
-    );
+    });
 
 
-/* =========================================
+/* =========================================================
    QUICK PROMPTS
-========================================= */
+========================================================= */
 
 document
     .querySelectorAll("[data-prompt]")
-    .forEach(
-        function (b) {
+    .forEach(function(button) {
 
-            b.onclick =
-                function () {
+        button.onclick =
+            function() {
 
-                    showPage(
-                        "chat"
-                    );
-
-                    if (messageInput) {
-
-                        messageInput.value =
-                            b.getAttribute(
-                                "data-prompt"
-                            );
-
-                        updateButton();
-
-                        messageInput.focus();
-
-                    }
-                };
-
-        }
-    );
+                showPage(
+                    "chat"
+                );
 
 
-/* =========================================
+                if (messageInput) {
+
+                    messageInput.value =
+                        button.getAttribute(
+                            "data-prompt"
+                        ) || "";
+
+
+                    updateButton();
+
+                    messageInput.focus();
+
+                }
+
+            };
+
+    });
+
+
+/* =========================================================
    MOBILE MENU
-========================================= */
+========================================================= */
 
 if (byId("mobileMenu")) {
 
     byId("mobileMenu").onclick =
-        function () {
+        function() {
 
-            var sidebar =
+            const sidebar =
                 byId("sidebar");
+
 
             if (sidebar) {
 
@@ -399,13 +462,15 @@ if (byId("mobileMenu")) {
                 );
 
             }
+
         };
+
 }
 
 
-/* =========================================
+/* =========================================================
    THEME
-========================================= */
+========================================================= */
 
 function toggleTheme() {
 
@@ -413,8 +478,8 @@ function toggleTheme() {
         "dark"
     );
 
-    localStorage.setItem(
 
+    localStorage.setItem(
         "aldii-theme",
 
         document.body.classList.contains(
@@ -422,8 +487,8 @@ function toggleTheme() {
         )
             ? "dark"
             : "light"
-
     );
+
 }
 
 
@@ -456,14 +521,14 @@ if (byId("settingsTheme")) {
 }
 
 
-/* =========================================
+/* =========================================================
    NEW CHAT
-========================================= */
+========================================================= */
 
 if (byId("newChat")) {
 
     byId("newChat").onclick =
-        function () {
+        function() {
 
             if (chatMessages) {
 
@@ -471,34 +536,52 @@ if (byId("newChat")) {
 
                     '<div class="welcome" id="welcome">' +
 
-                    '<div class="welcome-logo">A</div>' +
+                    '<div class="welcome-logo">' +
+                    'A' +
+                    '</div>' +
 
-                    '<h1>Bagaimana saya bisa membantu?</h1>' +
+                    '<h1>' +
+                    'Bagaimana saya bisa membantu?' +
+                    '</h1>' +
 
-                    '<p>Tanya, kirim foto, atau gunakan salah satu tools Aldii.</p>' +
+                    '<p>' +
+                    'Tanya, kirim foto, atau gunakan salah satu tools Aldii.' +
+                    '</p>' +
 
                     '</div>';
 
             }
+
+
+            if (messageInput) {
+
+                messageInput.value =
+                    "";
+
+                updateButton();
+
+            }
+
 
             showPage(
                 "chat"
             );
 
         };
+
 }
 
 
-/* =========================================
+/* =========================================================
    HISTORY
-========================================= */
+========================================================= */
 
 function saveHistory(
     question,
     answer
 ) {
 
-    var h =
+    const history =
         JSON.parse(
             localStorage.getItem(
                 "aldii-history"
@@ -506,7 +589,7 @@ function saveHistory(
         );
 
 
-    h.unshift({
+    history.unshift({
 
         question:
             question,
@@ -528,16 +611,20 @@ function saveHistory(
         "aldii-history",
 
         JSON.stringify(
-            h.slice(0, 50)
+            history.slice(
+                0,
+                50
+            )
         )
 
     );
+
 }
 
 
 function renderHistory() {
 
-    var list =
+    const list =
         byId(
             "historyList"
         );
@@ -548,138 +635,119 @@ function renderHistory() {
     }
 
 
-    list.innerHTML = "";
+    list.innerHTML =
+        "";
 
 
-    var h =
+    const history =
         JSON.parse(
-
             localStorage.getItem(
                 "aldii-history"
             ) || "[]"
-
         );
 
 
-    if (!h.length) {
+    if (!history.length) {
 
         list.textContent =
             "Belum ada riwayat.";
 
         return;
+
     }
 
 
-    h.forEach(
+    history.forEach(
+        function(item) {
 
-        function (item) {
-
-            var d =
+            const element =
                 document.createElement(
                     "div"
                 );
 
 
-            d.className =
+            element.className =
                 "history-item";
 
 
-            d.innerHTML =
+            const strong =
+                document.createElement(
+                    "strong"
+                );
 
-                "<strong>" +
 
-                escapeHtml(
-                    item.question
-                ) +
+            strong.textContent =
+                item.question || "";
 
-                "</strong>" +
 
-                "<small>" +
+            const small =
+                document.createElement(
+                    "small"
+                );
 
-                escapeHtml(
-                    item.date
-                ) +
 
-                "</small>";
+            small.textContent =
+                item.date || "";
+
+
+            element.appendChild(
+                strong
+            );
+
+
+            element.appendChild(
+                small
+            );
 
 
             list.appendChild(
-                d
+                element
             );
 
         }
-
     );
-}
 
-
-function escapeHtml(s) {
-
-    return String(s)
-        .replace(
-            /[&<>"']/g,
-            function (c) {
-
-                return {
-
-                    "&":
-                        "&amp;",
-
-                    "<":
-                        "&lt;",
-
-                    ">":
-                        "&gt;",
-
-                    '"':
-                        "&quot;",
-
-                    "'":
-                        "&#39;"
-
-                }[c];
-
-            }
-        );
 }
 
 
 if (byId("clearHistory")) {
 
     byId("clearHistory").onclick =
-        function () {
+        function() {
 
             localStorage.removeItem(
                 "aldii-history"
             );
 
+
             renderHistory();
 
         };
+
 }
 
 
 renderHistory();
 
 
-/* =========================================
-   VISION / FOTO TUGAS
-========================================= */
+/* =========================================================
+   VISION
+========================================================= */
 
-var visionFile =
+const visionFile =
     byId("visionFile");
 
-var visionPreview =
+const visionPreview =
     byId("visionPreview");
 
-var visionData =
+let visionData =
     "";
 
 
 if (byId("visionChoose")) {
 
     byId("visionChoose").onclick =
-        function () {
+        function() {
 
             if (visionFile) {
 
@@ -688,19 +756,21 @@ if (byId("visionChoose")) {
             }
 
         };
+
 }
 
 
 if (visionFile) {
 
     visionFile.onchange =
-        function () {
+        function() {
 
             readVisionFile(
                 visionFile.files[0]
             );
 
         };
+
 }
 
 
@@ -717,26 +787,31 @@ function readVisionFile(file) {
         )
     ) {
 
-        var errorResult =
-            byId("visionResult");
+        const result =
+            byId(
+                "visionResult"
+            );
 
-        if (errorResult) {
 
-            errorResult.textContent =
+        if (result) {
+
+            result.textContent =
                 "File harus berupa gambar.";
 
         }
 
+
         return;
+
     }
 
 
-    var reader =
+    const reader =
         new FileReader();
 
 
     reader.onload =
-        function () {
+        function() {
 
             visionData =
                 reader.result;
@@ -744,8 +819,42 @@ function readVisionFile(file) {
 
             if (visionPreview) {
 
-                visionPreview.src =
-                    visionData;
+                if (
+                    visionPreview.tagName ===
+                    "IMG"
+                ) {
+
+                    visionPreview.src =
+                        visionData;
+
+                }
+
+                else {
+
+                    visionPreview.innerHTML =
+                        "";
+
+
+                    const image =
+                        document.createElement(
+                            "img"
+                        );
+
+
+                    image.src =
+                        visionData;
+
+
+                    image.alt =
+                        "Preview";
+
+
+                    visionPreview.appendChild(
+                        image
+                    );
+
+                }
+
 
                 visionPreview.style.display =
                     "block";
@@ -755,44 +864,72 @@ function readVisionFile(file) {
         };
 
 
+    reader.onerror =
+        function() {
+
+            const result =
+                byId(
+                    "visionResult"
+                );
+
+
+            if (result) {
+
+                result.textContent =
+                    "Gagal membaca foto.";
+
+            }
+
+        };
+
+
     reader.readAsDataURL(
         file
     );
+
 }
 
 
-/* =========================================
-   VISION API
-========================================= */
+/* =========================================================
+   VISION REQUEST
+========================================================= */
 
 if (byId("visionAsk")) {
 
     byId("visionAsk").onclick =
-        function () {
+        function() {
 
             if (!visionData) {
 
-                var noImage =
+                const result =
                     byId(
                         "visionResult"
                     );
 
-                if (noImage) {
 
-                    noImage.textContent =
+                if (result) {
+
+                    result.textContent =
                         "Pilih foto terlebih dahulu.";
 
                 }
+
 
                 return;
 
             }
 
 
-            var prompt =
+            const promptInput =
                 byId(
                     "visionPrompt"
-                ).value.trim();
+                );
+
+
+            let prompt =
+                promptInput
+                    ? promptInput.value.trim()
+                    : "";
 
 
             if (!prompt) {
@@ -803,7 +940,7 @@ if (byId("visionAsk")) {
             }
 
 
-            var result =
+            const result =
                 byId(
                     "visionResult"
                 );
@@ -818,13 +955,13 @@ if (byId("visionAsk")) {
 
 
             fetch(
-
-                API_BASE +
+                ALDII_API +
                 "/api/vision",
 
                 {
 
-                    method: "POST",
+                    method:
+                        "POST",
 
                     headers: {
 
@@ -834,6 +971,7 @@ if (byId("visionAsk")) {
                     },
 
                     body:
+
                         JSON.stringify({
 
                             image:
@@ -848,71 +986,71 @@ if (byId("visionAsk")) {
 
             )
 
-            .then(
-                function (r) {
+            .then(function(response) {
 
-                    if (!r.ok) {
+                return response
+                    .json()
+                    .then(function(data) {
 
-                        throw new Error(
-                            "Vision server error " +
-                            r.status
-                        );
+                        if (!response.ok) {
 
-                    }
+                            throw new Error(
+                                data.error ||
+                                "Vision server error " +
+                                response.status
+                            );
 
-                    return r.json();
+                        }
 
-                }
-            )
 
-            .then(
-                function (data) {
+                        return data;
 
-                    if (result) {
+                    });
 
-                        result.textContent =
+            })
 
-                            data.response ||
+            .then(function(data) {
 
-                            data.error ||
+                if (result) {
 
-                            "Tidak ada jawaban.";
-
-                    }
-
-                }
-            )
-
-            .catch(
-                function (e) {
-
-                    if (result) {
-
-                        result.textContent =
-                            "Gagal: " +
-                            e.message;
-
-                    }
+                    result.textContent =
+                        data.response ||
+                        data.error ||
+                        "Tidak ada jawaban.";
 
                 }
-            );
+
+            })
+
+            .catch(function(error) {
+
+                if (result) {
+
+                    result.textContent =
+                        "Gagal: " +
+                        error.message;
+
+                }
+
+            });
 
         };
+
 }
 
 
-/* =========================================
+/* =========================================================
    FILE ASSISTANT
-========================================= */
+========================================================= */
 
-var fileInput =
+const fileInput =
     byId("fileInput");
 
 
 if (byId("fileChoose")) {
 
     byId("fileChoose").onclick =
-        function () {
+        function() {
 
             if (fileInput) {
 
@@ -921,48 +1059,55 @@ if (byId("fileChoose")) {
             }
 
         };
+
 }
 
 
 if (fileInput) {
 
     fileInput.onchange =
-        function () {
+        function() {
 
-            var f =
+            const file =
                 fileInput.files[0];
 
 
-            var result =
-                byId("fileResult");
+            const result =
+                byId(
+                    "fileResult"
+                );
 
 
-            if (!result) {
-                return;
-            }
+            if (result) {
 
+                result.textContent =
+                    file
 
-            result.textContent =
-                f
                     ? "File dipilih: " +
-                      f.name
+                      file.name
+
                     : "Belum ada file yang dipilih.";
 
+            }
+
         };
+
 }
 
 
-/* =========================================
-   GENERIC CHAT REQUEST
-========================================= */
+/* =========================================================
+   GENERIC AI REQUEST
+========================================================= */
 
 function askChat(
     prompt,
     resultId
 ) {
 
-    var result =
-        byId(resultId);
+    const result =
+        byId(
+            resultId
+        );
 
 
     if (!result) {
@@ -985,13 +1130,13 @@ function askChat(
 
 
     fetch(
-
-        API_BASE +
+        ALDII_API +
         "/api/chat",
 
         {
 
-            method: "POST",
+            method:
+                "POST",
 
             headers: {
 
@@ -1001,6 +1146,7 @@ function askChat(
             },
 
             body:
+
                 JSON.stringify({
 
                     message:
@@ -1012,251 +1158,329 @@ function askChat(
 
     )
 
-    .then(
-        function (r) {
+    .then(function(response) {
 
-            if (!r.ok) {
+        return response
+            .json()
+            .then(function(data) {
 
-                throw new Error(
-                    "Server error " +
-                    r.status
-                );
+                if (!response.ok) {
 
-            }
+                    throw new Error(
+                        data.error ||
+                        "Server error " +
+                        response.status
+                    );
 
-            return r.json();
+                }
 
-        }
-    )
 
-    .then(
-        function (d) {
+                return data;
 
-            result.textContent =
+            });
 
-                d.response ||
+    })
 
-                d.error ||
+    .then(function(data) {
 
-                "Tidak ada jawaban.";
+        result.textContent =
+            data.response ||
+            data.error ||
+            "Tidak ada jawaban.";
 
-        }
-    )
+    })
 
-    .catch(
-        function (e) {
+    .catch(function(error) {
 
-            result.textContent =
-                "Gagal: " +
-                e.message;
+        result.textContent =
+            "Gagal: " +
+            error.message;
 
-        }
-    );
+    });
+
 }
 
 
-/* =========================================
-   WEB SEARCH
-========================================= */
+/* =========================================================
+   SEARCH
+========================================================= */
 
 if (byId("searchAsk")) {
 
     byId("searchAsk").onclick =
-        function () {
+        function() {
+
+            const input =
+                byId(
+                    "searchInput"
+                );
+
 
             askChat(
 
                 "Cari dan jelaskan informasi tentang: " +
-
-                byId(
-                    "searchInput"
-                ).value,
+                (input ? input.value : ""),
 
                 "searchResult"
 
             );
 
         };
+
 }
 
 
-/* =========================================
+/* =========================================================
    WRITING
-========================================= */
+========================================================= */
 
 if (byId("writingAsk")) {
 
     byId("writingAsk").onclick =
-        function () {
+        function() {
+
+            const input =
+                byId(
+                    "writingInput"
+                );
+
 
             askChat(
 
                 "Bantu saya membuat atau memperbaiki tulisan berikut:\n" +
-
-                byId(
-                    "writingInput"
-                ).value,
+                (input ? input.value : ""),
 
                 "writingResult"
 
             );
 
         };
+
 }
 
 
-/* =========================================
-   STUDY MODE
-========================================= */
+/* =========================================================
+   STUDY
+========================================================= */
 
 if (byId("studyExplain")) {
 
     byId("studyExplain").onclick =
-        function () {
+        function() {
+
+            const input =
+                byId(
+                    "studyInput"
+                );
+
 
             askChat(
 
                 "Ajarkan topik berikut secara bertahap, sederhana, dengan contoh:\n" +
-
-                byId(
-                    "studyInput"
-                ).value,
+                (input ? input.value : ""),
 
                 "studyResult"
 
             );
 
         };
+
 }
 
 
 if (byId("studyQuiz")) {
 
     byId("studyQuiz").onclick =
-        function () {
+        function() {
+
+            const input =
+                byId(
+                    "studyInput"
+                );
+
 
             askChat(
 
                 "Buat 5 soal latihan beserta jawaban tentang:\n" +
-
-                byId(
-                    "studyInput"
-                ).value,
+                (input ? input.value : ""),
 
                 "studyResult"
 
             );
 
         };
+
 }
 
 
-/* =========================================
+/* =========================================================
    TRANSLATOR
-========================================= */
+========================================================= */
 
 if (byId("translateAsk")) {
 
     byId("translateAsk").onclick =
-        function () {
+        function() {
+
+            const target =
+                byId(
+                    "translateTarget"
+                );
+
+
+            const input =
+                byId(
+                    "translateInput"
+                );
+
 
             askChat(
 
                 "Terjemahkan teks berikut ke " +
 
-                byId(
-                    "translateTarget"
-                ).value +
+                (
+                    target
+                    ? target.value
+                    : "Indonesia"
+                ) +
 
                 ". Hanya berikan hasil terjemahannya:\n" +
 
-                byId(
-                    "translateInput"
-                ).value,
+                (
+                    input
+                    ? input.value
+                    : ""
+                ),
 
                 "translateResult"
 
             );
 
         };
+
 }
 
 
-/* =========================================
+/* =========================================================
    QUIZ
-========================================= */
+========================================================= */
 
 if (byId("quizAsk")) {
 
     byId("quizAsk").onclick =
-        function () {
+        function() {
+
+            const input =
+                byId(
+                    "quizInput"
+                );
+
 
             askChat(
 
                 "Buat 5 soal pilihan ganda tentang:\n" +
-
-                byId(
-                    "quizInput"
-                ).value,
+                (input ? input.value : ""),
 
                 "quizResult"
 
             );
 
         };
+
 }
 
 
-/* =========================================
+/* =========================================================
    COPY
-========================================= */
+========================================================= */
 
 function copyText(value) {
 
+    const text =
+        value || "";
+
+
     if (
-        navigator.clipboard
+        navigator.clipboard &&
+        navigator.clipboard.writeText
     ) {
 
-        navigator.clipboard
-            .writeText(
-                value || ""
-            );
+        navigator.clipboard.writeText(
+            text
+        );
+
+        return;
 
     }
+
+
+    const area =
+        document.createElement(
+            "textarea"
+        );
+
+
+    area.value =
+        text;
+
+
+    document.body.appendChild(
+        area
+    );
+
+
+    area.select();
+
+
+    document.execCommand(
+        "copy"
+    );
+
+
+    area.remove();
 
 }
 
 
-/* =========================================
+/* =========================================================
    CODING WORKSPACE
-========================================= */
+========================================================= */
 
 if (byId("codingRun")) {
 
     byId("codingRun").onclick =
-        function () {
+        function() {
 
-            var html =
+            const html =
+                byId("codingHtml")
+                ? byId("codingHtml").value
+                : "";
+
+
+            const css =
+                byId("codingCss")
+                ? byId("codingCss").value
+                : "";
+
+
+            const js =
+                byId("codingJs")
+                ? byId("codingJs").value
+                : "";
+
+
+            const preview =
                 byId(
-                    "codingHtml"
-                ).value;
+                    "codingPreview"
+                );
 
 
-            var css =
-                byId(
-                    "codingCss"
-                ).value;
+            if (!preview) {
+                return;
+            }
 
 
-            var js =
-                byId(
-                    "codingJs"
-                ).value;
-
-
-            byId(
-                "codingPreview"
-            ).srcdoc =
+            preview.srcdoc =
 
                 "<!doctype html>" +
 
@@ -1265,9 +1489,7 @@ if (byId("codingRun")) {
                 "<head>" +
 
                 "<style>" +
-
                 css +
-
                 "</style>" +
 
                 "</head>" +
@@ -1290,171 +1512,250 @@ if (byId("codingRun")) {
                 "</html>";
 
         };
+
 }
 
+
+/* =========================================================
+   CLEAR CODING
+========================================================= */
 
 if (byId("codingClear")) {
 
     byId("codingClear").onclick =
-        function () {
+        function() {
 
-            byId(
-                "codingHtml"
-            ).value = "";
+            if (byId("codingHtml")) {
 
-            byId(
-                "codingCss"
-            ).value = "";
+                byId(
+                    "codingHtml"
+                ).value =
+                    "";
 
-            byId(
-                "codingJs"
-            ).value = "";
+            }
 
-            byId(
-                "codingPreview"
-            ).srcdoc = "";
+
+            if (byId("codingCss")) {
+
+                byId(
+                    "codingCss"
+                ).value =
+                    "";
+
+            }
+
+
+            if (byId("codingJs")) {
+
+                byId(
+                    "codingJs"
+                ).value =
+                    "";
+
+            }
+
+
+            if (byId("codingPreview")) {
+
+                byId(
+                    "codingPreview"
+                ).srcdoc =
+                    "";
+
+            }
 
         };
+
 }
 
+
+/* =========================================================
+   COPY HTML
+========================================================= */
 
 if (byId("codingCopyHtml")) {
 
     byId("codingCopyHtml").onclick =
-        function () {
+        function() {
 
             copyText(
-                byId(
-                    "codingHtml"
-                ).value
+
+                byId("codingHtml")
+                ? byId("codingHtml").value
+                : ""
+
             );
 
         };
+
 }
 
+
+/* =========================================================
+   COPY CSS
+========================================================= */
 
 if (byId("codingCopyCss")) {
 
     byId("codingCopyCss").onclick =
-        function () {
+        function() {
 
             copyText(
-                byId(
-                    "codingCss"
-                ).value
+
+                byId("codingCss")
+                ? byId("codingCss").value
+                : ""
+
             );
 
         };
+
 }
 
+
+/* =========================================================
+   COPY JS
+========================================================= */
 
 if (byId("codingCopyJs")) {
 
     byId("codingCopyJs").onclick =
-        function () {
+        function() {
 
             copyText(
-                byId(
-                    "codingJs"
-                ).value
+
+                byId("codingJs")
+                ? byId("codingJs").value
+                : ""
+
             );
 
         };
+
 }
 
 
-/* =========================================
+/* =========================================================
    C++ ASSISTANT
-========================================= */
+========================================================= */
 
 function cppAsk(mode) {
 
-    var code =
+    const input =
         byId(
             "cppInput"
-        ).value;
+        );
 
 
-    askChat(
+    const code =
+        input
+        ? input.value
+        : "";
 
-        mode === "fix"
 
-            ? "Perbaiki kode C++ berikut dan berikan kode yang sudah benar:\n" +
-              code
+    if (mode === "fix") {
 
-            : "Jelaskan kode C++ berikut dengan bahasa sederhana:\n" +
-              code,
+        askChat(
 
-        "cppResult"
+            "Perbaiki kode C++ berikut dan berikan kode yang sudah benar:\n" +
+            code,
 
-    );
+            "cppResult"
+
+        );
+
+    }
+
+    else {
+
+        askChat(
+
+            "Jelaskan kode C++ berikut dengan bahasa sederhana:\n" +
+            code,
+
+            "cppResult"
+
+        );
+
+    }
+
 }
 
 
 if (byId("cppExplain")) {
 
     byId("cppExplain").onclick =
-        function () {
+        function() {
 
             cppAsk(
                 "explain"
             );
 
         };
+
 }
 
 
 if (byId("cppFix")) {
 
     byId("cppFix").onclick =
-        function () {
+        function() {
 
             cppAsk(
                 "fix"
             );
 
         };
+
 }
 
 
 if (byId("cppCopy")) {
 
     byId("cppCopy").onclick =
-        function () {
+        function() {
 
             copyText(
-                byId(
-                    "cppInput"
-                ).value
+
+                byId("cppInput")
+                ? byId("cppInput").value
+                : ""
+
             );
 
         };
+
 }
 
 
-/* =========================================
-   VOICE INPUT
-========================================= */
+/* =========================================================
+   VOICE
+========================================================= */
 
 if (byId("voiceStart")) {
 
     byId("voiceStart").onclick =
-        function () {
+        function() {
 
-            var out =
+            const output =
                 byId(
                     "voiceResult"
                 );
 
 
-            var Speech =
+            if (!output) {
+                return;
+            }
+
+
+            const SpeechRecognition =
                 window.SpeechRecognition ||
                 window.webkitSpeechRecognition;
 
 
-            if (!Speech) {
+            if (!SpeechRecognition) {
 
-                out.textContent =
+                output.textContent =
                     "Browser ini tidak mendukung voice input.";
 
                 return;
@@ -1462,89 +1763,139 @@ if (byId("voiceStart")) {
             }
 
 
-            var rec =
-                new Speech();
+            const recognition =
+                new SpeechRecognition();
 
 
-            rec.lang =
+            recognition.lang =
                 "id-ID";
 
 
-            rec.interimResults =
+            recognition.interimResults =
                 false;
 
 
-            rec.onstart =
-                function () {
+            recognition.continuous =
+                false;
 
-                    out.textContent =
+
+            recognition.onstart =
+                function() {
+
+                    output.textContent =
                         "Mendengarkan...";
 
                 };
 
 
-            rec.onresult =
-                function (e) {
+            recognition.onresult =
+                function(event) {
 
-                    messageInput.value =
-                        e.results[0][0]
-                            .transcript;
+                    if (messageInput) {
 
-                    updateButton();
+                        messageInput.value =
+                            event
+                                .results[0][0]
+                                .transcript;
 
-                    showPage(
-                        "chat"
-                    );
 
-                    messageInput.focus();
+                        updateButton();
+
+
+                        showPage(
+                            "chat"
+                        );
+
+
+                        messageInput.focus();
+
+                    }
 
                 };
 
 
-            rec.onerror =
-                function (e) {
+            recognition.onerror =
+                function(event) {
 
-                    out.textContent =
+                    output.textContent =
                         "Voice error: " +
-                        e.error;
+                        event.error;
 
                 };
 
 
-            rec.start();
+            recognition.onend =
+                function() {
+
+                    if (
+                        output.textContent ===
+                        "Mendengarkan..."
+                    ) {
+
+                        output.textContent =
+                            "Selesai.";
+
+                    }
+
+                };
+
+
+            recognition.start();
 
         };
+
 }
 
 
-/* =========================================
+/* =========================================================
    AI IMAGE
-========================================= */
+========================================================= */
 
 if (byId("generateImage")) {
 
     byId("generateImage").onclick =
-        function () {
+        function() {
 
             alert(
                 "AI Image membutuhkan endpoint image generation dari provider."
             );
 
         };
+
 }
 
 
-/* =========================================
-   STARTUP
-========================================= */
+/* =========================================================
+   START
+========================================================= */
 
 updateButton();
 
+
 console.log(
-    "Aldii frontend loaded."
+    "================================"
 );
 
 console.log(
-    "API:",
-    API_BASE
+    "       ALDII FRONTEND"
+);
+
+console.log(
+    "================================"
+);
+
+console.log(
+    "Cloudflare Worker:"
+);
+
+console.log(
+    ALDII_API
+);
+
+console.log(
+    "Aldii frontend loaded successfully."
+);
+
+console.log(
+    "================================"
 );
